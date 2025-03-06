@@ -1,0 +1,7 @@
+.venv/
+.env
+main.py
+matrimony_prompt.py
+create_vector.py
+db/
+documents/
