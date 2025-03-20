@@ -103,7 +103,8 @@ def search_profiles_with_gemini(df, user_name, top_k=5, location=None, education
 
                     "Matchmaking priorities and weights:"
 
-                    "User Preferences - 50%: Cross-verify age, marital history, education, career, culture, language, religious commitment, and lifestyle. Unmet mandatory preferences lower the score."
+                    "Most importantly look at the contents and context under preferences section and try matching *strictly* with that of opposite profile and vice a versa."
+                    "User Preferences with Cross Verification - 50%: *age*, *marital history*, *occupation* , *education*,*family background*, career, culture, language, religious commitment, and lifestyle. Unmet mandatory preferences lower the score."
                     "Religious Alignment - 30%: Ensure sect alignment. Mismatches score below 50%."
                     "Personality & Lifestyle - 10%: Shared interests refine compatibility."
                     "Age Difference - 10%: Female age should be equal to or less than male’s unless flexibility is indicated."

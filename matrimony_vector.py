@@ -84,13 +84,17 @@ def create_vector(mongodb_uri,db_name="matrimonial",collection_name="whatsapp_da
         "Date Of Birth: "+ " " + df["date_of_birth"].astype(str) + " \n" +
         "Age: "+ " " + df["age"].astype(str) + " \n" +
         "Marital Status: "+ " " + df["marital_status"].astype(str) + " \n" +
+        "Gender: "+ " " + df["gender"].astype(str) + " \n" +
         "complexion: "+ " " + df["complexion"].astype(str) + " \n" +
         "Religion: "+ " " + df["religion"].astype(str) + " \n" +
         "Education: "+ " " + df["education"].astype(str) + " \n" +
         "Height: "+ " " + df["height"].astype(str) + " \n" +
         "Native_place: "+ " " + df["native_place"].astype(str) + " \n" +
         "residence: "+ " " + df["residence"].astype(str) + " \n" +
+        "Father: "+ " " + df["father"].astype(str) + " \n" +
+        "Mother: "+ " " + df["mother"].astype(str) + " \n" +
         "Maslak_sect: "+ " " + df["maslak_sect"].astype(str) + " \n" +
+        "occupation: "+ " " + df["occupation"].astype(str) + " \n" +
         "Preference: "+ " " + df["preferences"].astype(str)
     )
     df["text"] = (
@@ -99,6 +103,7 @@ def create_vector(mongodb_uri,db_name="matrimonial",collection_name="whatsapp_da
         "Date Of Birth: "+ " " + df["date_of_birth"].astype(str) + " \n" +
         "Age: "+ " " + df["age"].astype(str) + " \n" +
         "Marital Status: "+ " " + df["marital_status"].astype(str) + " \n" +
+        "Gender: "+ " " + df["gender"].astype(str) + " \n" +
         "complexion: "+ " " + df["complexion"].astype(str) + " \n" +
         "Religion: "+ " " + df["religion"].astype(str) + " \n" +
         "Education: "+ " " + df["education"].astype(str) + " \n" +
@@ -106,6 +111,7 @@ def create_vector(mongodb_uri,db_name="matrimonial",collection_name="whatsapp_da
         "Native_place: "+ " " + df["native_place"].astype(str) + " \n" +
         "residence: "+ " " + df["residence"].astype(str) + " \n" +
         "Maslak_sect: "+ " " + df["maslak_sect"].astype(str) + " \n" +
+        "occupation: "+ " " + df["occupation"].astype(str) + " \n" +
         "Preference: "+ " " + df["preferences"].astype(str)
     )
     # df["text"] = (

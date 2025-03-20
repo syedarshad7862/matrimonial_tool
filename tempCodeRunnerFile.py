@@ -1,3 +1,2 @@
- # print("\n--- Document Chunks Information ---")
-    # print(f"Number of document chunks: {len(docs)}")
-    # print(f"Sample chunk:\n{docs[0].page_content}\n")
+# Load API Key
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")

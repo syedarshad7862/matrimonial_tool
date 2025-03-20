@@ -3,5 +3,10 @@
 main.py
 matrimony_prompt.py
 create_vector.py
+matrimony_main.py
+matrimony_with_hybrid.py
+matrimony_v_cluster.py
+matrimony_cluster.py
+matrimony_vector_hybrid.py
 db/
 documents/
