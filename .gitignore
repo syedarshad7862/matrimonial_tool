@@ -8,5 +8,8 @@ matrimony_with_hybrid.py
 matrimony_v_cluster.py
 matrimony_cluster.py
 matrimony_vector_hybrid.py
+matrimony_main.py
+matrimony_second.py
+matrimony_vector.py
 db/
 documents/
