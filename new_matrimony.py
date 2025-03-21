@@ -20,7 +20,10 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 # Load MongoDB data and vector store
 mongodb_uri = "mongodb://localhost:27017"  # Change this to your MongoDB URI
 texts,df = create_chunks(mongodb_uri)
+
+# this function generate emebeddings and insert into vectors
 # create_faiss_index()
+
 # print(df.head())  # Check first few rows
 # print("Columns in df:", df.columns)
 print(texts[0])

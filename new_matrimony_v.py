@@ -39,6 +39,7 @@ def create_chunks(mongodb_uri, db_name="matrimonial", collection_name="new_profi
         "Deender: "+ " " + df["pref_deendari"].astype(str) + " \n" +
         "location: "+ " " + df["pref_location"].astype(str) + " \n" +
         "sect: "+ " " + df["sect"].astype(str) + " \n" +
+        "Native_place: "+ " " + df["native_place"].astype(str) + " \n" +
         "religious_practice: "+ " " + df["religious_practice"].astype(str) + " \n" +
         "pref_own_house: "+ " " + df["pref_own_house"].astype(str) + " \n" +
         "Preferences: "+ " " + df["preferences"].astype(str)
@@ -112,6 +113,7 @@ def create_chunks(mongodb_uri, db_name="matrimonial", collection_name="new_profi
         "Father: "+ " " + df["father"].astype(str) + " \n" +
         "Mother: "+ " " + df["mother"].astype(str) + " \n" +
         "Maslak_sect: "+ " " + df["sect"].astype(str) + " \n" +
+        "religious_practice: "+ " " + df["religious_practice"].astype(str) + " \n" +
         "occupation: "+ " " + df["occupation"].astype(str) + " \n" +
         "Preference: "+ " " + df["preferences"].astype(str)
     )
