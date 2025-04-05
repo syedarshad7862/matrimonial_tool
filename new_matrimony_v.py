@@ -5,7 +5,7 @@ from sentence_transformers import SentenceTransformer
 from pymongo import MongoClient
 import os
 
-def create_chunks(mongodb_uri, db_name="matrimonial", collection_name="new_profiles"):
+def create_chunks(mongodb_uri, db_name="matrimonial", collection_name="sample_profiles"):
     # Connect to MongoDB
     client = MongoClient(mongodb_uri)
     db = client[db_name]
@@ -17,8 +17,8 @@ def create_chunks(mongodb_uri, db_name="matrimonial", collection_name="new_profi
 
     # Ensure required fields exist
     required_fields = ["pref_age_range", "pref_marital_status", "pref_complexion", "pref_education", "pref_height", 
-                    "pref_native_place", "pref_maslak_sect", "pref_no_of_siblings", "pref_work_job", "pref_go_to_dargah", "pref_mother_tongue", "pref_deendari","profile_id","sect" "religious_practice", "full_name", "date_of_birth", "age", "marital_status", 
-                "religion", "education", "height", "native_place",'occupation','preferences']
+                    "pref_native_place", "pref_maslak_sect", "pref_no_of_siblings", "pref_work_job", "pref_go_to_dargah", "pref_mother_tongue", "pref_deendari","profile_id","sect", "religious_practice", "full_name", "date_of_birth", "age", "marital_status", 
+                "religion", "education" "father" "father_name", "height", "native_place",'occupation','preferences']
     for field in required_fields:
         if field not in df.columns:
             df[field] = "unknown"
@@ -26,6 +26,8 @@ def create_chunks(mongodb_uri, db_name="matrimonial", collection_name="new_profi
     df["text"] = (
         df["full_name"].astype(str) + " \n" +
         "age_range: "+ " " + df["pref_age_range"].astype(str) + " \n" +
+        "Date Of Birth: "+ " " + df["date_of_birth"].astype(str) + " \n" +
+        "Age: "+ " " + df["age"].astype(str) + " \n" +
         "Marital Status: "+ " " + df["pref_marital_status"].astype(str) + " \n" +
         "Complexion: "+ " " + df["pref_complexion"].astype(str) + " \n" +
         "Education: "+ " " + df["pref_education"].astype(str) + " \n" +
@@ -110,7 +112,7 @@ def create_chunks(mongodb_uri, db_name="matrimonial", collection_name="new_profi
         "Height: "+ " " + df["height"].astype(str) + " \n" +
         "Native_place: "+ " " + df["native_place"].astype(str) + " \n" +
         "residence: "+ " " + df["residence"].astype(str) + " \n" +
-        "Father: "+ " " + df["father"].astype(str) + " \n" +
+        "Father: "+ " " + df["father_name"].astype(str) + " \n" +
         "Mother: "+ " " + df["mother"].astype(str) + " \n" +
         "Maslak_sect: "+ " " + df["sect"].astype(str) + " \n" +
         "religious_practice: "+ " " + df["religious_practice"].astype(str) + " \n" +
@@ -242,7 +244,7 @@ def create_chunks(mongodb_uri, db_name="matrimonial", collection_name="new_profi
 # Example usage
 # create_faiss_index("mongodb://localhost:27017", "matrimonial", "whatsapp_data")
 
-def create_faiss_index(mongodb_uri = "mongodb://localhost:27017", db_name="matrimonial", collection_name="new_profiles"):
+def create_faiss_index(mongodb_uri = "mongodb://localhost:27017", db_name="matrimonial", collection_name="sample_profiles"):
     """Create separate FAISS indexes for male and female profiles."""
 
     model = SentenceTransformer("all-MiniLM-L6-v2")
@@ -261,7 +263,7 @@ def create_faiss_index(mongodb_uri = "mongodb://localhost:27017", db_name="matri
     # Ensure required fields exist
     required_fields = ["pref_age_range", "pref_marital_status", "pref_complexion", "pref_education", "pref_height", 
                     "pref_native_place", "pref_maslak_sect", "pref_no_of_siblings", "pref_work_job", "pref_go_to_dargah", "pref_mother_tongue", "pref_deendari","profile_id","sect", "full_name", "date_of_birth", "age", "marital_status", 
-                "religion", "education","maslak_sect" "height","religious_practice" ,"native_place",'occupation','preferences',"go_to_dargah"]
+                "religion", "education","father","maslak_sect" "height","religious_practice" ,"native_place",'occupation','preferences',"go_to_dargah"]
     for field in required_fields:
         if field not in male_df.columns:
             male_df[field] = "unknown"
@@ -317,7 +319,6 @@ def create_faiss_index(mongodb_uri = "mongodb://localhost:27017", db_name="matri
         "Native_place: "+ " " + male_df["native_place"].astype(str) + " \n" +
         "residence: "+ " " + male_df["residence"].astype(str) + " \n" +
         "Father: "+ " " + male_df["father"].astype(str) + " \n" +
-        "Mother: "+ " " + male_df["mother"].astype(str) + " \n" +
         "sect: "+ " " + male_df["sect"].astype(str) + " \n" +
         "religious_practice: "+ " " + male_df["religious_practice"].astype(str) + " \n" +
         "go_to_dargah: "+ " " + male_df["go_to_dargah"].astype(str) + " \n" +
@@ -337,7 +338,6 @@ def create_faiss_index(mongodb_uri = "mongodb://localhost:27017", db_name="matri
         "Native_place: "+ " " + female_df["native_place"].astype(str) + " \n" +
         "residence: "+ " " + female_df["residence"].astype(str) + " \n" +
         "Father: "+ " " + female_df["father"].astype(str) + " \n" +
-        "Mother: "+ " " + female_df["mother"].astype(str) + " \n" +
         "sect: "+ " " + female_df["sect"].astype(str) + " \n" +
         "religious_practice,: "+ " " + female_df["religious_practice"].astype(str) + " \n" +
         "go_to_dargah: "+ " " + female_df["go_to_dargah"].astype(str) + " \n" +

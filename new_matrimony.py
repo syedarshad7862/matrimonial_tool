@@ -1,5 +1,6 @@
 import pickle
-# from rank_bm25 import BM25Okapi
+from pydantic import BaseModel, Field
+from typing import List, Optional
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.schema import SystemMessage, HumanMessage
 import os
@@ -151,19 +152,65 @@ def search_profiles_with_gemini(df, user_name, top_k=5, location=None, education
 def transform_llm_response(llm_response):
     gemini_model = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
     
-    messages = [
-    ("system", "You are an AI assisstence"),
-    ("human", """From the following text, prepare a dictionary that contains following keys:
-     Profile, Age, Marital History, Occupation, Preferences, Matched_Profile. Prepare nested dictionaries under Age, Marital History,
-     Occupation and Matched_Profile keys and have two more keys namely score and remarks.
-     In remarks keep everything apart from score and age. Generate a list as the value of Matched_Profile key which should further contain a dictionary of matched profile that includes all the above keys.
-     If the text does not contain specific score, consider it as 'N/A'. All the mentioned keys must be available in the final dictinoary.
-     The text is as follows: {text}""")]
+    # messages = [
+    # ("system", "You are an AI assisstence"),
+    # ("human", """From the following text, prepare a dictionary that contains following keys:
+    #  Profile, Age, Marital History, Occupation, Preferences, Matched_Profile. Prepare nested dictionaries under Age, Marital History,
+    #  Occupation and Matched_Profile keys and have two more keys namely score and remarks.
+    #  In remarks keep everything apart from score and age. Generate a list as the value of Matched_Profile key which should further contain a dictionary of matched profile that includes all the above keys.
+    #  If the text does not contain specific score, consider it as 'N/A'. All the mentioned keys must be available in the final dictinoary.
+    #  The text is as follows: {text}""")]
     
-    prompt_template = ChatPromptTemplate.from_messages(messages)
-    prompt = prompt_template.invoke({"text": llm_response})
-    result = gemini_model.invoke(prompt)
-    return result.content
+    # prompt_template = ChatPromptTemplate.from_messages(messages)
+    # prompt = prompt_template.invoke({"text": llm_response})
+    # result = gemini_model.invoke(prompt)
+    # Define the user profile schema
+    class UserProfile(BaseModel):
+        name: str
+        age_range: str
+        marital_status: str
+        religion: str
+        location: str
+        education: str
+        preferences: str
+
+    # Define a model for Match Evaluation scores
+    class MatchScore(BaseModel):
+        user_preferences: int
+        religious_alignment: int
+        personality_lifestyle: int
+        age: int
+        total_score: int
+        compatibility: str
+
+    # Define a model for each match
+    class Match(BaseModel):
+        profile_id: int = Field(description="Exctract profile_id")
+        name: str
+        age: int
+        marital_status: str
+        occupation: str
+        education: str
+        family_background: Optional[str] = "Unknown"
+        native_place: str
+        maslak_sect: Optional[str] = Field(description="Write only the maslak or sect if available", default="Unknown")
+        religious_alignment: Optional[str] = "Unknown"
+        personality_lifestyle: Optional[str] = "Unknown"
+        preferences: str
+        score_breakdown: MatchScore
+
+    # Define a model for the overall match analysis
+    class MatchAnalysis(BaseModel):
+        user_profile: UserProfile
+        matches: List[Match]
+        conclusion: str
+    
+    structured_model = gemini_model.with_structured_output(MatchAnalysis)
+    
+    result = structured_model.invoke(llm_response)
+    result_dict = dict(result)
+    
+    return result_dict
 i = 1
 
 while i < 10:
